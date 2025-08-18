@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Nova Converter</title>
-  <link rel="stylesheet" href="style.css?=v1.0.6">
+  <link rel="stylesheet" href="style.css?=v1.0.7">
   <meta name="description" content="Convert English -> NovaModern" />
   <style>
     :root{
@@ -49,6 +49,12 @@
       font-family: 'NovaModern', system-ui, sans-serif;
     }
     .sub{ color: var(--muted); font-size: 14px; margin-top: 6px; }
+
+    #right {
+      white-space: pre-wrap;
+      word-break: break-word;
+      max-width: 40ch;
+    }
 
     #themeToggle {
       position: fixed;
@@ -263,7 +269,7 @@
   </style>
 </head>
 <body>
-  <script src="app.js?v=1.0.6"></script>
+  <script src="app.js?v=1.0.7"></script>
 
   <header>
     <div class="title">Nova Converter</div>
@@ -320,7 +326,7 @@
   </div>
 
   <footer>
-    Made by The [ MAOU ] — v-1.0.6
+    Made by The [ MAOU ] — v1.0.7
   </footer>
 
   <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
