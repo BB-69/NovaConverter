@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Nova Converter</title>
-  <link rel="stylesheet" href="style.css?=v1.0">
+  <link rel="stylesheet" href="style.css?=v1.0.1">
   <meta name="description" content="Convert English -> NovaModern" />
   <style>
     :root{
@@ -53,7 +53,7 @@
     #themeToggle {
       position: absolute;
       right: 20px;
-      top: 20px;
+      bottom: 20px;
       padding: 6px 12px;
       border-radius: 8px;
       cursor: pointer;
@@ -187,18 +187,52 @@
       color: var(--text);
     }
 
+    .warning-box {
+      position: fixed;
+      bottom: 15px;
+      left: 15px;
+      background: #ffcc00;
+      color: #000;
+      padding: 6px 10px;
+      border-radius: 6px;
+      font-size: 14px;
+      font-weight: bold;
+      cursor: help;
+      z-index: 9999;
+    }
+
+    .warning-box .tooltip {
+      visibility: hidden;
+      width: 200px;
+      background: #333;
+      color: #fff;
+      text-align: left;
+      border-radius: 5px;
+      padding: 8px;
+      position: absolute;
+      bottom: 125%; /* show above the box */
+      left: 0;
+      opacity: 0;
+      transition: opacity 0.3s;
+      font-size: 13px;
+    }
+
+    .warning-box:hover .tooltip {
+      visibility: visible;
+      opacity: 1;
+    }
+
     footer{ padding: 16px clamp(16px, 4vw, 48px) 48px; color: var(--muted); font-size: 12px; display:flex; justify-content:center; align-items:center; }
     a{ color: var(--accent); text-decoration: none; }
     a:hover{ text-decoration: underline; }
   </style>
 </head>
 <body>
-  <script src="app.js?v=1.0"></script>
+  <script src="app.js?v=1.0.1"></script>
 
   <header>
     <div class="title">Nova Converter</div>
     <div class="sub">The Translation Center of Nova</div>
-    <button id="themeToggle">🌞</button>
   </header>
 
   <main class="wrap">
@@ -219,7 +253,7 @@
           <h2>NovaModern</h2>
           <div class="actions">
             <div class="dropdown">
-              <button id="customizeBtn" class="btn" aria-haspopup="true" aria-expanded="false">Customize ⬇</button>
+              <button id="customizeBtn" class="btn preview-btn" aria-haspopup="true" aria-expanded="false">Customize ⬇</button>
               <div class="dropdown-content">
                 <div class="sub" style="text-align: left;">On Export</div>
                 <hr>
@@ -229,8 +263,8 @@
                 </div>
               </div>
             </div>
-            <button id="copyBtn" class="btn">Copy to Clipboard</button>
-            <button id="downloadImgBtn" class="btn">Export PNG</button>
+            <button id="copyBtn" class="btn btn preview-btn">Copy to Clipboard</button>
+            <button id="downloadImgBtn" class="btn btn preview-btn">Export PNG</button>
             <button class="btn expand-btn" data-target="panelRight">⤢</button>
           </div>
         </header>
@@ -241,6 +275,13 @@
     </div>
   </main>
 
+  <button id="themeToggle">🌞</button>
+
+  <div class="warning-box">
+    ⚠
+    <span class="tooltip">Due to technical issue, all utilities in Preview box will be disabled on mobile.</span>
+  </div>
+
   <footer>
     Made by The [ MAOU ]
   </footer>
@@ -248,6 +289,19 @@
   <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
 
   <script>
+    function disablePreviewButtonsOnMobile() {
+      const isMobile = window.matchMedia("(max-width: 768px)").matches 
+                    || 'ontouchstart' in window;
+
+      const previewBtns = document.querySelectorAll('.preview-btn');
+      previewBtns.forEach(btn => {
+        btn.disabled = isMobile; // disable if mobile
+      });
+    }
+
+    disablePreviewButtonsOnMobile();
+    window.addEventListener('resize', disablePreviewButtonsOnMobile);
+
     const left = document.getElementById('left');
     const right = document.getElementById('right');
     const clearBtn = document.getElementById('clearBtn');
