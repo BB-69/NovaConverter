@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Nova Converter</title>
+  <meta name="description" content="Convert English -> NovaModern" />
+  <style>
+    :root{
+      --bg: #fafafa;
+      --panel: #ffffff;
+      --muted: #6b7280;
+      --text: #1e293b;
+      --accent: #60a5fa;
+      --accent-2: #facc15;
+    }
+    * { box-sizing: border-box; }
+    html, body { height: 100%; }
+    body{
+      margin:0; font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Noto Sans, Ubuntu, Cantarell, Helvetica Neue, Arial;
+      background: var(--bg);
+      color: var(--text);
+    }
+    header{
+      padding: 20px clamp(16px, 4vw, 48px);
+      text-align: center;
+      border-bottom: 2px solid rgba(0,0,0,.08);
+    }
+    .title{
+      font-size: clamp(28px, 6vw, 48px);
+      font-weight: 800;
+      color: var(--text);
+      font-family: 'NovaModern', system-ui, sans-serif;
+    }
+    .sub{ color: var(--muted); font-size: 14px; margin-top: 6px; }
+
+    .wrap{ padding: 16px clamp(16px, 4vw, 48px) 32px; }
+    .grid{
+      display:grid; gap: 16px; grid-template-columns: 1fr; align-items: stretch;
+    }
+    @media (min-width: 900px){
+      .grid{ grid-template-columns: 1fr 1fr; }
+    }
+
+    .panel{
+      background: var(--panel);
+      border-radius: 16px;
+      overflow: hidden;
+      display:flex; flex-direction:column; min-height: 320px;
+      position: relative;
+    }
+    .panel.left{ 
+      border: 1px solid var(--accent-2); 
+      box-shadow: 0 0 0 2px var(--accent); 
+    }
+    .panel.right{ 
+      border: 1px solid var(--accent); 
+      box-shadow: 0 0 0 2px var(--accent-2); 
+    }
+
+    .panel header{
+      border: 0; padding: 10px 14px; background: rgba(0,0,0,.03);
+      display:flex; justify-content:space-between; align-items:center; gap:10px;
+    }
+    .panel h2{ margin:0; font-size: 13px; text-transform: uppercase; letter-spacing: 1px; color: var(--muted); }
+    .actions { display:flex; gap:6px; }
+
+    .btn{ 
+      appearance:none; border: 1px solid rgba(0,0,0,.1); background: var(--panel);
+      color: var(--text); padding: 6px 10px; border-radius: 8px; cursor: pointer; font-weight: 600;
+      font-size: 13px;
+    }
+    .btn[disabled]{ opacity:.6; cursor:not-allowed; }
+
+    textarea, .output{
+      width: 100%; flex: 1 1 auto; padding: 16px; border: 0; outline: none; background: transparent; color: var(--text);
+      font-size: clamp(16px, 1.2vw + 12px, 20px); line-height: 1.6; resize: none;
+      white-space: pre-wrap; word-break: break-word;
+      font-family: inherit;
+    }
+    textarea{ height: 100%; }
+    textarea::placeholder{ color: #9ca3af; }
+
+    .output{
+      position: relative;
+      display: flex;
+    }
+    .out-inner{
+      width: 100%;
+      padding: 16px; 
+      white-space: pre-wrap; 
+      word-break: break-word; 
+      min-height: 100%;
+      font-kerning: normal; 
+      font-variant-ligatures: contextual common-ligatures;
+      font-family: 'NovaModern', system-ui, sans-serif;
+      font-size: clamp(16px, 1.2vw + 12px, 20px);
+      line-height: 1.6;
+    }
+    .missing{ opacity: .9; text-decoration: underline dotted rgba(0,0,0,.25); text-underline-offset: 3px; }
+
+    .panel.expanded {
+      position: fixed;
+      inset: 0;
+      z-index: 1000;
+      margin: 0;
+      border-radius: 0;
+      box-shadow: none;
+      background: var(--panel);
+    }
+    .hidden { display:none !important; }
+
+    footer{ padding: 16px clamp(16px, 4vw, 48px) 48px; color: var(--muted); font-size: 12px; display:flex; justify-content:center; align-items:center; }
+    a{ color: var(--accent); text-decoration: none; }
+    a:hover{ text-decoration: underline; }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="title">Nova Converter</div>
+    <div class="sub">The Translation Center of Nova</div>
+  </header>
+
+  <main class="wrap">
+    <div class="grid" id="grid">
+      <section class="panel left" aria-label="Input panel" id="panelLeft">
+        <header>
+          <h2>System (input)</h2>
+          <div class="actions">
+            <button id="clearBtn" class="btn" type="button">Clear</button>
+            <button class="btn expand-btn" data-target="panelLeft">⤢</button>
+          </div>
+        </header>
+        <textarea id="left" placeholder="Type here..."></textarea>
+      </section>
+
+      <section class="panel right" aria-label="Output panel" id="panelRight">
+        <header>
+          <h2>NovaModern (preview)</h2>
+          <div class="actions">
+            <button class="btn expand-btn" data-target="panelRight">⤢</button>
+          </div>
+        </header>
+        <div class="output">
+          <div id="right" class="out-inner"></div>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <footer>
+    Made by The [ MAOU ]
+  </footer>
+
+  <script>
+    const left = document.getElementById('left');
+    const right = document.getElementById('right');
+    const clearBtn = document.getElementById('clearBtn');
+    const expandBtns = document.querySelectorAll('.expand-btn');
+    const panelLeft = document.getElementById('panelLeft');
+    const panelRight = document.getElementById('panelRight');
+
+    // Load NovaModern font
+    const defaultFontUrl = 'NovaModern.woff2';
+    const defaultFontFace = new FontFace('NovaModern', `url(${defaultFontUrl})`);
+    defaultFontFace.load().then(f => { document.fonts.add(f); render(); });
+
+    function render(){
+      right.textContent = left.value;
+    }
+
+    left.addEventListener('input', render);
+    clearBtn.addEventListener('click', ()=>{ left.value = ''; render(); left.focus(); });
+
+    // Expand logic
+    expandBtns.forEach(btn=>{
+      btn.addEventListener('click', ()=>{
+        const target = document.getElementById(btn.dataset.target);
+        const other = (target.id === 'panelLeft') ? panelRight : panelLeft;
+        if(target.classList.contains('expanded')){
+          target.classList.remove('expanded');
+          other.classList.remove('hidden');
+          btn.textContent = '⤢';
+        } else {
+          target.classList.add('expanded');
+          other.classList.add('hidden');
+          btn.textContent = '✖';
+        }
+      });
+    });
+
+    left.value = 'Stella Sora release when?';
+    render();
+  </script>
+</body>
+</html>
