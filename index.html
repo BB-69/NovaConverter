@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Nova Converter</title>
-  <link rel="stylesheet" href="style.css?=v1.0.7">
+  <link rel="stylesheet" href="style.css?=v1.0.8">
   <meta name="description" content="Convert English -> NovaModern" />
   <style>
     :root{
@@ -58,9 +58,9 @@
 
     #themeToggle {
       position: fixed;
-      right: 20px;
+      right: 15px;
       bottom: 30px;
-      padding: 6px 12px;
+      padding: 12px 12px;
       border-radius: 8px;
       cursor: pointer;
       border: 1px solid rgba(0,0,0,.3);
@@ -269,7 +269,7 @@
   </style>
 </head>
 <body>
-  <script src="app.js?v=1.0.7"></script>
+  <script src="app.js?v=1.0.8"></script>
 
   <header>
     <div class="title">Nova Converter</div>
@@ -320,43 +320,30 @@
     <button id="themeToggle">🌞</button>
   </div>
 
-  <div class="warning-box">
+  <!-- <div class="warning-box">
     ⚠
     <span class="tooltip">Due to technical issue, all utilities in Preview box will be disabled on mobile.</span>
-  </div>
+  </div> -->
 
   <footer>
-    Made by The [ MAOU ] — v1.0.7
+    Made by The [ MAOU ] — v1.0.8
   </footer>
 
   <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
 
   <script>
-    function disablePreviewButtonsOnMobile() {
-      const isMobile = window.matchMedia("(max-width: 768px)").matches 
-                    || 'ontouchstart' in window;
+    // function disablePreviewButtonsOnMobile() {
+    //   const isMobile = window.matchMedia("(max-width: 768px)").matches 
+    //                 || 'ontouchstart' in window;
 
-      const previewBtns = document.querySelectorAll('.preview-btn');
-      previewBtns.forEach(btn => {
-        btn.disabled = isMobile; // disable if mobile
-      });
-    }
+    //   const previewBtns = document.querySelectorAll('.preview-btn');
+    //   previewBtns.forEach(btn => {
+    //     btn.disabled = isMobile; // disable if mobile
+    //   });
+    // }
 
-    disablePreviewButtonsOnMobile();
-    window.addEventListener('resize', disablePreviewButtonsOnMobile);
-
-    function disablePreviewButtonsOnMobile() {
-      const isMobile = window.matchMedia("(max-width: 768px)").matches 
-                    || 'ontouchstart' in window;
-
-      const previewBtns = document.querySelectorAll('.preview-btn');
-      previewBtns.forEach(btn => {
-        btn.disabled = isMobile; // disable if mobile
-      });
-    }
-
-    disablePreviewButtonsOnMobile();
-    window.addEventListener('resize', disablePreviewButtonsOnMobile);
+    // disablePreviewButtonsOnMobile();
+    // window.addEventListener('resize', disablePreviewButtonsOnMobile);
 
     const left = document.getElementById('left');
     const right = document.getElementById('right');
@@ -457,21 +444,20 @@
 
       html2canvas(clone, {
         backgroundColor: bgToggle.checked ? null : (document.body.classList.contains('dark') ? '#0f172a' : '#fafafa'),
-        scale: 1
+        scale: 1,
+        onclone: (clonedDoc) => {
+          clonedDoc.fonts.add(defaultFontFace);
+        }
       }).then(async canvas => {
         try {
           canvas.toBlob(async blob => {
             if (navigator.clipboard && blob) {
               await navigator.clipboard.write([new ClipboardItem({ 'image/png': blob })]);
-              //alert('Copied to clipboard!');
-            } else {
-              //alert('Clipboard API not supported...');
             }
             document.body.removeChild(wrapper);
           });
         } catch (err) {
           console.error(err);
-          //alert('Failed to copy...');
           document.body.removeChild(wrapper);
         }
       });
@@ -492,7 +478,10 @@
 
       html2canvas(clone, {
         backgroundColor: bgToggle.checked ? null : (document.body.classList.contains('dark') ? '#0f172a' : '#fafafa'),
-        scale: 1
+        scale: 1,
+        onclone: (clonedDoc) => {
+          clonedDoc.fonts.add(defaultFontFace);
+        }
       }).then(canvas => {
         const link = document.createElement('a');
         link.download = 'novamodern.png';
