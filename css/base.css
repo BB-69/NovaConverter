@@ -1,0 +1,11 @@
+* { box-sizing: border-box; }
+html, body { height: 100%; }
+body{
+    margin:0; font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Noto Sans, Ubuntu, Cantarell, Helvetica Neue, Arial;
+    background: var(--bg);
+    color: var(--text);
+    transition: background .3s, color .3s;
+}
+a{ color: var(--accent); text-decoration: none; }
+a:hover{ text-decoration: underline; }
+.hidden { display:none !important; }
