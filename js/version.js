@@ -1,5 +1,5 @@
 /* ---UPDATE VERSION HERE--- */
-const APP_VERSION = "1.0.9";
+const APP_VERSION = "1.0.10";
 
 document.addEventListener("DOMContentLoaded", () => {
   // Auto-append version query to CSS + JS assets

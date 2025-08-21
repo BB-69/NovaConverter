@@ -13,7 +13,7 @@ function spawnPopup(message) {
 
     const popup = document.createElement("div");
     popup.classList.add("popup");
-    popup.textContent = message;
+    popup.innerHTML = message;
     container.appendChild(popup);
 
     setTimeout(() => popup.classList.add("show"), 10);

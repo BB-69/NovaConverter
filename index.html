@@ -30,7 +30,7 @@
 </head>
 <body>
   <header>
-    <div class="title">Nova Converter</div>
+    <div class="title unselectable">Nova Converter</div>
     <div class="sub">The Translation Center of Nova</div>
   </header>
 
@@ -66,16 +66,16 @@
                 </div>
               </div>
             </div>
-            <button id="copyBtn" class="btn preview-btn" onclick="spawnPopup('Copied an image!')">
+            <button id="copyBtn" class="btn preview-btn" onclick="spawnPopup('<b>Copied an image!')">
               Copy
             </button>
-            <button id="exportImgBtn" class="btn preview-btn" onclick="spawnPopup('Exported an image!')">
+            <button id="exportImgBtn" class="btn preview-btn" onclick="spawnPopup('<b>Exported an image!')">
               Export
             </button>
             <button class="btn expand-btn" data-target="panelRight">⤢</button>
           </div>
         </header>
-        <div class="output">
+        <div class="output unselectable">
           <div id="right" class="out-inner"></div>
         </div>
       </section>
