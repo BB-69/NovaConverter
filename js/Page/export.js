@@ -1,5 +1,5 @@
 const copyBtn = document.getElementById('copyBtn');
-const downloadImgBtn = document.getElementById('downloadImgBtn');
+const exportImgBtn = document.getElementById('exportImgBtn');
 
 copyBtn.addEventListener('click', async () => {
     const clone = right.cloneNode(true);
@@ -33,7 +33,7 @@ copyBtn.addEventListener('click', async () => {
 });
 
 // Export PNG
-downloadImgBtn.addEventListener('click', () => {
+exportImgBtn.addEventListener('click', () => {
     const clone = document.getElementById('right').cloneNode(true);
     clone.style.color = document.body.classList.contains('dark') ? '#ffffff' : '#000000';
 
