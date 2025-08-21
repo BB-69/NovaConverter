@@ -25,6 +25,7 @@
   <script src="js/Page/dropdown.js" data-versioned defer></script>
   <script src="js/Page/export.js" data-versioned defer></script>
   <script src="js/Page/popup.js" data-versioned defer></script>
+  <script src="js/Page/valueUpdate.js" data-versioned defer></script>
 
   <meta name="description" content="Convert English -> NovaModern" />
 </head>
@@ -61,8 +62,20 @@
                 <div class="sub" style="text-align: left;">On Export</div>
                 <hr>
                 <div class="export-option">
-                  <span>Transparent BG</span>
+                  <label>Transparent BG </label>
                   <input type="checkbox" id="bgToggle">
+                </div>
+                <div class="export-option">
+                  <label for="resSlider">Resolution </label>
+                  <input type="range" id="resSlider" min="1" max="5" step="1" value="1"
+                  style="width: 100px;">
+                  <span id="resValue" style="width: 50px">1 res</span>
+                </div>
+                <div class="export-option">
+                  <label for="charSlider">Max Char</label>
+                  <input type="range" id="charSlider" min="10" max="100" value="40"
+                  style="width: 100px;">
+                  <span id="charValue" style="width: 50px">40 ch</span>
                 </div>
               </div>
             </div>

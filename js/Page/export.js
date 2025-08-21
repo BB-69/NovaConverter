@@ -1,5 +1,8 @@
 const copyBtn = document.getElementById('copyBtn');
 const exportImgBtn = document.getElementById('exportImgBtn');
+const resSlider = document.getElementById('resSlider');
+const charSlider = document.getElementById('charSlider');
+const rightElement = document.getElementById('right');
 
 // function disableBtnTemp(button, ms) {
 //     button.disabled = true;
@@ -35,8 +38,10 @@ function flashCheckBtn(button, duration, message = '✔') {
 copyBtn.addEventListener('click', async () => {
     flashCheckBtn(copyBtn, 2000);
 
+    rightElement.style.maxWidth = charSlider.value + 'ch';
     const clone = right.cloneNode(true);
     clone.style.color = document.body.classList.contains('dark') ? '#ffffff' : '#000000';
+    rightElement.style.maxWidth = "max-content";
 
     const wrapper = document.createElement('div');
     wrapper.appendChild(clone);
@@ -46,7 +51,7 @@ copyBtn.addEventListener('click', async () => {
 
     html2canvas(clone, {
         backgroundColor: bgToggle.checked ? null : (document.body.classList.contains('dark') ? '#0f172a' : '#fafafa'),
-        scale: 1,
+        scale: resSlider.value,
         onclone: (clonedDoc) => {
             clonedDoc.fonts.add(defaultFontFace);
         }
@@ -69,8 +74,10 @@ copyBtn.addEventListener('click', async () => {
 exportImgBtn.addEventListener('click', () => {
     flashCheckBtn(exportImgBtn, 2000);
 
-    const clone = document.getElementById('right').cloneNode(true);
+    rightElement.style.maxWidth = charSlider.value + 'ch';
+    const clone = right.cloneNode(true);
     clone.style.color = document.body.classList.contains('dark') ? '#ffffff' : '#000000';
+    rightElement.style.maxWidth = "max-content";
 
     const wrapper = document.createElement('div');
     wrapper.appendChild(clone);
@@ -80,7 +87,7 @@ exportImgBtn.addEventListener('click', () => {
 
     html2canvas(clone, {
         backgroundColor: bgToggle.checked ? null : (document.body.classList.contains('dark') ? '#0f172a' : '#fafafa'),
-        scale: 1,
+        scale: resSlider.value,
         onclone: (clonedDoc) => {
             clonedDoc.fonts.add(defaultFontFace);
         }

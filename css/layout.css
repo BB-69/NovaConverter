@@ -15,7 +15,7 @@ header{
 #right {
     white-space: pre-wrap;
     word-break: break-word;
-    max-width: 40ch;
+    max-width: max-content;
 }
 
 .wrap{ padding: 16px clamp(16px, 4vw, 48px) 32px; }
