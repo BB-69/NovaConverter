@@ -24,12 +24,13 @@
   <script src="js/Page/theme.js" data-versioned defer></script>
   <script src="js/Page/dropdown.js" data-versioned defer></script>
   <script src="js/Page/export.js" data-versioned defer></script>
+  <script src="js/Page/popup.js" data-versioned defer></script>
 
   <meta name="description" content="Convert English -> NovaModern" />
 </head>
 <body>
   <header>
-    <div class="title">Nova Converter</div>
+    <div class="title unselectable">Nova Converter</div>
     <div class="sub">The Translation Center of Nova</div>
   </header>
 
@@ -65,24 +66,28 @@
                 </div>
               </div>
             </div>
-            <button id="copyBtn" class="btn preview-btn">Copy</button>
-            <button id="downloadImgBtn" class="btn preview-btn">Export</button>
+            <button id="copyBtn" class="btn preview-btn" onclick="spawnPopup('<b>Copied an image!')">
+              Copy
+            </button>
+            <button id="exportImgBtn" class="btn preview-btn" onclick="spawnPopup('<b>Exported an image!')">
+              Export
+            </button>
             <button class="btn expand-btn" data-target="panelRight">⤢</button>
           </div>
         </header>
-        <div class="output">
+        <div class="output unselectable">
           <div id="right" class="out-inner"></div>
         </div>
       </section>
     </div>
   </main>
 
-  <!-- Theme toggle -->
   <div>
     <button id="themeToggle">🌞</button>
   </div>
 
-  <!-- ⚠ Optional Warning -->
+  <div id="popup-container"></div>
+
   <!-- 
   <div class="warning-box">
     ⚠
