@@ -106,7 +106,7 @@ textarea::placeholder{ color: #9ca3af; }
     border-radius: 12px;
     padding: 10px;
     box-shadow: 0 4px 12px rgba(0,0,0,.2);
-    min-width: 180px;
+    min-width: 280px;
     z-index: 200;
 }
 .dropdown.show .dropdown-content { display: block; }
@@ -117,6 +117,57 @@ textarea::placeholder{ color: #9ca3af; }
     margin: 6px 0;
     color: var(--text);
 }
+
+input[type="checkbox"].checkbox {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  border: 2px solid black;
+  border-radius: 4px;
+  background: white;
+  cursor: pointer;
+  display: inline-block;
+  position: relative;
+}
+input[type="checkbox"].checkbox:checked {
+  background: #16c916;
+  border: 2px solid black;
+}
+
+input[type="range"].slider {
+  -webkit-appearance: none;
+  width: 200px;
+  height: 8px;
+  background: white;
+  border: 2px solid black;
+  border-radius: 5px;
+  outline: none;
+}
+input[type="range"].slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 16px;
+  height: 16px;
+  background: white;
+  border: 2px solid black;
+  border-radius: 50%;
+  cursor: pointer;
+}
+input[type="range"].slider::-moz-range-thumb {
+  width: 16px;
+  height: 16px;
+  background: white;
+  border: 2px solid black;
+  border-radius: 50%;
+  cursor: pointer;
+}
+input[type="range"].slider::-moz-range-track {
+  background: white;
+  border: 2px solid black;
+  border-radius: 5px;
+}
+
 
 .warning-box {
     position: fixed;
