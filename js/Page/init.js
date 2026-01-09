@@ -34,5 +34,5 @@ left.addEventListener('input', render);
 clearBtn.addEventListener('click', ()=>{ left.value = ''; render(); left.focus(); });
 
 // Default text
-left.value = 'Stella Sora release when?';
+left.value = 'The Sora is very Stellar';
 render();
